@@ -3,9 +3,10 @@ import {
     useEffect 
 } from 'react'
 
-import { getAllSunglasses } from '../../api/sunglasses';
+import { useParams } from 'react-router-dom'
+import { getAllSunglasses, deleteSunglasses } from '../../api/sunglasses';
 import LoadingScreen from './../shared/LoadingScreen'
-import Card from 'react-bootstrap/Card'
+import {Card} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const cardContainerStyle = {
@@ -20,7 +21,7 @@ const cardContainerStyle = {
 // Display them all 
 const SunglassesIndex = () => {
     const [sunglasses, setSunglasses] = useState(null)
-
+    
     useEffect(() => {
         console.log('Use effect')
         
@@ -29,7 +30,7 @@ const SunglassesIndex = () => {
             .catch(err => console.log(err))
     },[])
     console.log('these are the sunglasses', sunglasses)
-
+    
     if (!sunglasses) {
         return <LoadingScreen />
     } else if (sunglasses.length === 0) {
@@ -39,24 +40,19 @@ const SunglassesIndex = () => {
     const sunglassesCards = sunglasses.map(item => (
         <Card 
             style={{width: '15%', margin: 10}} 
-            key={sunglasses.id}
+            key={sunglasses._id}
         >
             <Card.Body>
                 <Card.Header>{item.brand}</Card.Header>
-                <Link to={`/sunglasses/${item.id}`}> view {item.brand}</Link>
+                <Link to={`/sunglasses/${item._id}`}>view {item.brand}</Link>
             </Card.Body>
         </Card>
     ))
-
+    
     return (
-        <>
-            <h1>Your Sunglasses</h1>
-            <div style={cardContainerStyle}>
-            
-
-                {sunglassesCards}
-            </div>
-        </>
+        <div style={cardContainerStyle}>
+            {sunglassesCards}
+        </div>
     )
 }
 
