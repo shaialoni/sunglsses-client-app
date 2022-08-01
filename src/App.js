@@ -13,6 +13,7 @@ import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
 import ShowPage from './components/sunglasses/ShowPage'
+import CreatePage from './components/sunglasses/CreatePage'
 
 const App = () => {
 
@@ -70,8 +71,12 @@ const App = () => {
 				</RequireAuth>}
 			/>
 			<Route	
-			path='/sunglasses/:id'
-			element={<ShowPage/>}
+				path='/sunglasses/:id'
+				element={<ShowPage msgAlert={msgAlert} />}
+			/>
+			<Route
+				path='/addSunglasses'
+				element={<CreatePage/>}
 			/>
 			</Routes>
 			{msgAlerts.map((msgAlert) => (

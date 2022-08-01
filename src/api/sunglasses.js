@@ -10,6 +10,41 @@ export const getOneSunglasses = (id) => {
     return axios(`${apiUrl}/sunglasses/${id}`)
 }
 
-export const deleteSunglasses = (id) => {
-    return axios.delete(`${apiUrl}/sunglasses/delete/${id}`)
+//CREATE
+export const createSunglasses = (newShades) => {
+    
+	return axios({
+		url: apiUrl + '/sunglasses',
+		method: 'POST',
+		// headers: {
+		// 	Authorization: `Token token=${user.token}`,
+		// },
+		data: { sunglasses: newShades },
+	})
+}
+
+//UPDATE
+export const updateSunglasses = (updatedShades) => {
+  
+   
+    console.log('this is updatedShades', updatedShades)
+	return axios({
+		url: `${apiUrl}/sunglasses/${updatedShades._id}`,
+		method: 'PATCH',
+		// headers: {
+		// 	Authorization: `Token token=${user.token}`,
+		// },
+		data: { pet: updatedShades },
+	})
+}
+
+//DELETE
+export const removeSunglasses = (shadesId) => {
+	return axios({
+		url: `${apiUrl}/sunglasses/${shadesId}`,
+		method: 'DELETE',
+		// headers: {
+		// 	Authorization: `Token token=${user.token}`,
+		// }
+	})
 }

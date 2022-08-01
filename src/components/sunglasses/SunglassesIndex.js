@@ -37,10 +37,10 @@ const SunglassesIndex = () => {
         return <p>No sunglasses yet. Better buy some!!!</p>
     }
     
-    const sunglassesCards = sunglasses.map(item => (
+    const sunglassesCards = sunglasses.map((item, i) => (
         <Card 
             style={{width: '15%', margin: 10}} 
-            key={sunglasses._id}
+            key={i}
         >
             <Card.Body>
                 <Card.Header>{item.brand}</Card.Header>

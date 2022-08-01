@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 import { Card, Container, Button } from 'react-bootstrap'
 
-import { Redirect, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import LoadingScreen from '../shared/LoadingScreen'
-import { getOneSunglasses, deleteSunglasses } from '../../api/sunglasses'
+import { getOneSunglasses, removeSunglasses } from '../../api/sunglasses'
+
 
 const ShowPage = (props) => {
     const [sunglasses, setSunglasses] = useState(null)
-    const [deleted, setDeleted] = useState(false)
+    const { msgAlert } = props
+
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -16,23 +18,44 @@ const ShowPage = (props) => {
     useEffect(() => {
         getOneSunglasses(id)
             .then(res => setSunglasses(res.data.sunglasses))
-            .catch(err => console.log(err))
+            .catch(err => {
+                msgAlert({
+                    heading: 'Error getting sunglasses',
+                    message: 'Hmmm... Something went wrong...',
+                    variant: 'danger'
+                })
+                navigate('/')
+            })
     },[])
 
-    deleteSunglasses(id)
-        .then(res => {
-            setDeleted(true)
+    console.log('this is the sunglasses', sunglasses)
+  
+    const destroySunglasses = () => {
+        removeSunglasses(sunglasses._id)
+        .then(() => {
+            msgAlert({
+                heading: 'Success',
+                message: 'Glsasses succesfully removed',
+                variant: 'success'
+            })
         })
-        .catch(err => console.log(err))
+        // then navigate to index
+        .then(() => {navigate('/')})
+        // on failure send a failure message
+        .catch(err => {                   
+            msgAlert({
+                heading: 'Error removing sunglasses',
+                message: 'Hmmm... Something went wrong...',
+                variant: 'danger'
+            })
+        })
 
+    }
+    
     
     if (!sunglasses) {
         return <LoadingScreen/>
     }
-
-    if (deleted) {
-        return <Redirect to="/sunglasses"/>
-      }
 
     return (
         <Container className='fluid' style={{width: '20%'}}>
@@ -46,8 +69,8 @@ const ShowPage = (props) => {
                 </Card.Body>
                 <Button 
                     variant="outline-danger"
-                    onClick={deleteSunglasses}
-                >Delete</Button>
+                    onClick={() => destroySunglasses()}
+                >Delete {sunglasses.brand}</Button>
             </Card>
 
         </Container>
