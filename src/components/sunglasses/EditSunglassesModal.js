@@ -33,13 +33,9 @@ const EditSunglassesModal = (props) => {
     }
 
     const handleSubmit = (e) => {
-        // e equals the event
-        //e.preventDefault()
-        console.log('==============sunglasses================', sunglasses)
+        //e.preventDefault() <------------------- Does this need to be commented out to properly work?
         updateSunglasses(sunglasses)
-            // if we're successful in the modal, we want the modal to close
             .then(() => handleClose())
-            // send a success message to the user
             .then(() => {
                 msgAlert({
                     heading: 'Oh Yeah!',

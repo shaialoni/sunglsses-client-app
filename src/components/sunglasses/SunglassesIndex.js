@@ -1,12 +1,7 @@
-import { 
-    useState,
-    useEffect 
-} from 'react'
-
-//import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { getAllSunglasses } from '../../api/sunglasses';
 import LoadingScreen from './../shared/LoadingScreen'
-import {Card} from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const cardContainerStyle = {
@@ -16,21 +11,15 @@ const cardContainerStyle = {
     margin: '10px'
 }
 
-// SunglassesIndex should make a request to the API
-// To get all sunglasses
-// Display them all 
 const SunglassesIndex = () => {
     const [sunglasses, setSunglasses] = useState(null)
     
     useEffect(() => {
-        console.log('Use effect')
-        
         getAllSunglasses()
             .then(res => setSunglasses(res.data.sunglasses))
             .catch(err => console.log(err))
     },[])
-    console.log('these are the sunglasses', sunglasses)
-    
+
     if (!sunglasses) {
         return <LoadingScreen />
     } else if (sunglasses.length === 0) {

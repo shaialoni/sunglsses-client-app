@@ -2,8 +2,7 @@ import apiUrl from '../apiConfig'
 import axios from 'axios'
 
 export const getAllSunglasses = () => {
-    return axios(`${apiUrl}/sunglasses`)
-        
+    return axios(`${apiUrl}/sunglasses`) 
 }
 
 export const getOneSunglasses = (id) => {
@@ -12,7 +11,6 @@ export const getOneSunglasses = (id) => {
 
 //CREATE
 export const createSunglasses = (newShades) => {
-    
 	return axios({
 		url: apiUrl + '/sunglasses',
 		method: 'POST',
@@ -25,9 +23,6 @@ export const createSunglasses = (newShades) => {
 
 //UPDATE
 export const updateSunglasses = (updatedShades) => {
-  
-   
-    console.log('this is updatedShades', updatedShades)
 	return axios({
 		url: `${apiUrl}/sunglasses/${updatedShades._id}`,
 		method: 'PATCH',

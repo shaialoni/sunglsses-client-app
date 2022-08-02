@@ -2,7 +2,6 @@ import { Form, Button, Container } from 'react-bootstrap'
 
 const SunglassesForm = (props) => {
     const { sunglasses, handleChange, handleSubmit, heading} = props
-    console.log('props --------', props)
     return (
         <Container className="justify-content-center">
             <h3>{heading}</h3>
@@ -18,7 +17,6 @@ const SunglassesForm = (props) => {
                     id="brand"
                     onChange={handleChange}
                 />
-                
                 <Form.Label htmlFor="frameColor">Frame color</Form.Label>
                 <Form.Control 
                     placeholder="Enter frame's color"
@@ -33,9 +31,11 @@ const SunglassesForm = (props) => {
                     defaultChecked={ sunglasses.isPolarized }
                     onChange={handleChange}
                 />
-            
-                <Button variant="primary" type="submit">
-                Submit
+                <Button 
+                    variant="primary" 
+                    type="submit"
+                >
+                    Submit
                 </Button>
             </Form>
         </Container>

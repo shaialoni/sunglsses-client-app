@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Card, Container, Button } from 'react-bootstrap'
-
 import { useNavigate, useParams } from 'react-router-dom'
-
 import LoadingScreen from '../shared/LoadingScreen'
 import { getOneSunglasses, removeSunglasses, updateSunglasses } from '../../api/sunglasses'
 import EditSunglassesModal from './EditSunglassesModal'
 
-
 const ShowPage = (props) => {
     const [sunglasses, setSunglasses] = useState(null)
-
     const [editModalShow, setEditModalShow] = useState(false)
+    // eslint-disable-next-line
     const [updated, setUpdated] = useState(false)
 
     const { msgAlert } = props
@@ -45,9 +42,7 @@ const ShowPage = (props) => {
                 variant: 'success'
             })
         })
-        // then navigate to index
         .then(() => {navigate('/')})
-        // on failure send a failure message
         .catch(err => {                   
             msgAlert({
                 heading: 'Error removing sunglasses',
