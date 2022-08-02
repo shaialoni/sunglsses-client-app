@@ -4,11 +4,16 @@ import { Card, Container, Button } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import LoadingScreen from '../shared/LoadingScreen'
-import { getOneSunglasses, removeSunglasses } from '../../api/sunglasses'
+import { getOneSunglasses, removeSunglasses, updateSunglasses } from '../../api/sunglasses'
+import EditSunglassesModal from './EditSunglassesModal'
 
 
 const ShowPage = (props) => {
     const [sunglasses, setSunglasses] = useState(null)
+
+    const [editModalShow, setEditModalShow] = useState(false)
+    const [updated, setUpdated] = useState(false)
+
     const { msgAlert } = props
 
 
@@ -26,6 +31,7 @@ const ShowPage = (props) => {
                 })
                 navigate('/')
             })
+    // eslint-disable-next-line
     },[])
 
     console.log('this is the sunglasses', sunglasses)
@@ -58,22 +64,38 @@ const ShowPage = (props) => {
     }
 
     return (
-        <Container className='fluid' style={{width: '20%'}}>
-            <Card>
-                <Card.Header>{sunglasses.brand}</Card.Header>
-                <Card.Body>
-                    <Card.Text>
-                        <div><small>Frame Color: {sunglasses.frameColor}</small></div>
-                        <div><small>Polarized: {sunglasses.isPolarized ? 'yes' : 'no'}</small></div>
-                    </Card.Text>
-                </Card.Body>
-                <Button 
-                    variant="outline-danger"
-                    onClick={() => destroySunglasses()}
-                >Delete {sunglasses.brand}</Button>
-            </Card>
+        <>
+            <Container className='fluid' style={{width: '20%'}}>
+                <Card>
+                    <Card.Header>{sunglasses.brand}</Card.Header>
+                    <Card.Body>
+                        <Card.Text>
+                            <div><small>Frame Color: {sunglasses.frameColor}</small></div>
+                            <div><small>Polarized: {sunglasses.isPolarized ? 'yes' : 'no'}</small></div>
+                        </Card.Text>
+                    </Card.Body>
+                    <Button 
+                        className="m-2"
+                        variant="outline-danger"
+                        onClick={() => destroySunglasses()}
+                    >Delete {sunglasses.brand}</Button>
+                    <Button
+                        classname="m-2"
+                        variant="outline-warning"
+                        onClick={() => setEditModalShow(true)}
+                    >Edit {sunglasses.brand}</Button>
+                </Card>
 
-        </Container>
+            </Container>
+            <EditSunglassesModal 
+            sunglasses={sunglasses}
+            show={editModalShow} 
+            updateSunglasses={updateSunglasses}
+            msgAlert={msgAlert}
+            triggerRefresh={() => setUpdated(prev => !prev)}
+            handleClose={() => setEditModalShow(false)} 
+        />
+    </>
     )
 }
 

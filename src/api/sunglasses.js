@@ -34,7 +34,7 @@ export const updateSunglasses = (updatedShades) => {
 		// headers: {
 		// 	Authorization: `Token token=${user.token}`,
 		// },
-		data: { pet: updatedShades },
+		data: { sunglasses: updatedShades },
 	})
 }
 

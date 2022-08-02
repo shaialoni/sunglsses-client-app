@@ -6,20 +6,20 @@ const linkStyle = {
     color: 'white',
     textDecoration: 'none'
 }
-const authenticatedOptions = (
-	<>
-		<Nav.Item className = 'm-2'>
-			<Link to='change-password' style={linkStyle}>
-				Change Password
-			</Link>
-		</Nav.Item>
-		<Nav.Item className = 'm-2'>
-			<Link to='sign-out' style={linkStyle}>
-				Sign Out
-			</Link>
-		</Nav.Item>
-	</>
-)
+// const authenticatedOptions = (
+// 	<>
+// 		<Nav.Item className = 'm-2'>
+// 			<Link to='change-password' style={linkStyle}>
+// 				Change Password
+// 			</Link>
+// 		</Nav.Item>
+// 		<Nav.Item className = 'm-2'>
+// 			<Link to='sign-out' style={linkStyle}>
+// 				Sign Out
+// 			</Link>
+// 		</Nav.Item>
+// 	</>
+// )
 
 const unauthenticatedOptions = (
 	<>
@@ -63,7 +63,8 @@ const Header = ({ user }) => (
 					<span className='navbar-text mr-2'>Welcome, {user.email}</span>
 				)}
 				{alwaysOptions}
-				{user ? authenticatedOptions : unauthenticatedOptions}
+				{/* {user ? authenticatedOptions : unauthenticatedOptions} */}
+				{unauthenticatedOptions}
 			</Nav>
 		</Navbar.Collapse>
 	</Navbar>

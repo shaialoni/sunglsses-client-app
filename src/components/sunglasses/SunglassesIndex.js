@@ -3,8 +3,8 @@ import {
     useEffect 
 } from 'react'
 
-import { useParams } from 'react-router-dom'
-import { getAllSunglasses, deleteSunglasses } from '../../api/sunglasses';
+//import { useParams } from 'react-router-dom'
+import { getAllSunglasses } from '../../api/sunglasses';
 import LoadingScreen from './../shared/LoadingScreen'
 import {Card} from 'react-bootstrap'
 import { Link } from 'react-router-dom'

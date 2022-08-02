@@ -76,7 +76,7 @@ const App = () => {
 			/>
 			<Route
 				path='/addSunglasses'
-				element={<CreatePage/>}
+				element={<CreatePage msgAlert={msgAlert}/>}
 			/>
 			</Routes>
 			{msgAlerts.map((msgAlert) => (

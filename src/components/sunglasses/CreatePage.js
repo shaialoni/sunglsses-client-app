@@ -1,23 +1,34 @@
 import SunglassesForm from '../shared/SunglassesForm'
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import axios from 'axios';
-import apiUrl from '../../apiConfig';
+import { useNavigate } from 'react-router-dom'
+import { createSunglasses } from '../../api/sunglasses';
 
 const CreatePage = (props) => {
+    const { msgAlert } = props
+    const navigate = useNavigate()
+
     const [sunglasses, setSunglasses] = useState({
         brand: '',
         frameColor:'',
         isPolarized: false
     })
-    const [updated, setUpdated] = useState(false)
-    const [createdId, setCreatedId] = useState(false)
 
     const handleChange = (e) => {
-        e.persist()
         setSunglasses(prevValue => {
-            const updatedValue = e.target.value
+            let updatedValue = e.target.value
             const updatedName = e.target.name
+            
+            if (e.target.type === 'number') {
+                updatedValue = parseInt(e.target.value)
+            }
+
+            // this handles the checkbox, changing on to true etc
+            if (updatedName === "isPolarized" && e.target.checked) {
+                updatedValue = true
+            } else if (updatedName === "isPolarized" && !e.target.checked) {
+                updatedValue = false
+            }
+            
             const updatedSunglasses = {
                 [updatedName]: updatedValue
             }
@@ -28,32 +39,32 @@ const CreatePage = (props) => {
         })
     }
 
-    const handleSubmitUpdate = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        axios({
-            method: 'PATCH',
-            url: `${apiUrl}/sunglasses/${props.match.params._id}`,
-            data: {sunglasses: sunglasses}
-        })
+            createSunglasses(sunglasses)
+            .then(res => { navigate(`/sunglasses/${res.data.sunglasses._id}`)})
             .then(() => {
-                setUpdated(true)
+                msgAlert({
+                    heading: 'Oh Yeah!',
+                    message: 'Sunglasses created succesfuly',
+                    variant: 'success'
+                })
             })
-            .catch(console.error)
+            .catch(() => {
+                msgAlert({
+                    heading: 'Oh No!',
+                    message: 'Hmm... Something went wrong...',
+                    variant: 'danger'
+                })
+            })
     }
 
-    if (updated) {
-        return <Navigate to={`/sunglasses/${props.match.params._id}`}/>
-    }
-
-    if (createdId) {
-        return <Navigate to={`/sunglasses/${createdId}`} />
-      }
     return (
         
         <SunglassesForm 
             sunglasses={sunglasses} 
             handleChange={handleChange} 
-            handleSubmit={handleSubmitUpdate}
+            handleSubmit={handleSubmit}
             heading="Add new Sunglasses"
         />
     )
